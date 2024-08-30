@@ -16,7 +16,6 @@ namespace Semanticabbc
     {
         public Lenguaje()
         {
-
         }
 
         public Lenguaje(string nombre) : base (nombre)

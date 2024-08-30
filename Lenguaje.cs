@@ -53,13 +53,14 @@ namespace Semanticabbc
             }                
         }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
-        private void ListaIdentificadores()
+        private void ListaIdentificadores(Variable.TipoDato t)
         {
+            
             match(Tipos.Identificador);
             if (getContenido() == ",")
             {
                 match(",");
-                ListaIdentificadores();
+                ListaIdentificadores(t);
             }
         }
         //Variables -> tipo_dato Lista_identificadores; Variables?

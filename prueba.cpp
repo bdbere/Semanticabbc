@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 static void Main(string[] args)
 {
-    char e;
+    char a,a,a;
     float pi;
     int rex;
 

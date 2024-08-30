@@ -1,0 +1,4 @@
+Analizador Lexico
+Autor: Rafael Mejía
+using = Identificador
+Error: Sintaxis: se espera un Numero

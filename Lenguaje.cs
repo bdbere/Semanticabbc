@@ -1,44 +1,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-
+using Semanticabbc;
+/*
+    1.Colocar el numero de linea de errores lexicos y sintacticos
+    2.Cambiar la clase token por atributos publicots(get, set)
+    3.Cambiar los constructores de la clase lexico usando parametros
+    por default
+*/
 
 namespace Semanticabbc
 {
-
-
     public class Lenguaje : Sintaxis
     {
-
-
         public Lenguaje()
         {
-            //prueba comentario para git
-            //segundo comentario de prueba -cami 3434343
-            //tercer comentario de prueba--MBSN
         }
 
-
-        public Lenguaje(string nombre) : base(nombre)
+        public Lenguaje(string nombre) : base (nombre)
         {
 
         }
-        // Programa -> Librerías? Variables? Main
+        //Programa  -> Librerias? Variables? Main
         public void Programa()
         {
-            //Librerias? Variables? Main
-            if (getContenido() == "using")
+            if (getContenido()== "using")
             {
                 Librerias();
             }
-            if (getClasificacion() == Tipos.TipoDato)
-            {
-                Variables();
-            }
             Main();
-        }
+        }    
         //Librerias -> using ListaLibrerias; Librerias?
         private void Librerias()
         {
@@ -50,48 +42,38 @@ namespace Semanticabbc
                 Librerias();
             }
         }
-        // ListaLibrerias -> identificador (.ListaLibrerias)?
+        //ListaLibrerias -> identificador (.ListaLibrerias)?
         private void ListaLibrerias()
         {
             match(Tipos.Identificador);
-            if (getContenido() == ".")
+            if(getContenido() == ".")
             {
                 match(".");
                 ListaLibrerias();
-            }
+            }                
         }
-        // Variables -> tipoDato ListaIdentificadores; Variables?
-        private void Variables()
-        {
-            match(Tipos.TipoDato);
-            ListaIdentificadores(tipoDato);
-            match(";");
-            if (getClasificacion() == Tipos.TipoDato)
-            {
-                Variables();
-            }
-        }
-
-        // ListaIdentificadores -> identificador (,ListaIdentificadores)?
+        //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores()
         {
+            match(Tipos.Identificador);
             if (getContenido() == ",")
             {
                 match(",");
                 ListaIdentificadores();
             }
         }
-        // BloqueInstrucciones -> { listaIntrucciones? }
-        private void BloqueInstrucciones()
+        //Variables -> tipo_dato Lista_identificadores; Variables?
+        private void Variables()
         {
-            match("{");
-            if (getContenido() != "}")
+            match(Tipos.TipoDato);
+            ListaIdentificadores();
+            match(";");
+            if (getClasificacion() == Tipos.TipoDato)
             {
-                ListaInstrucciones();
+                Variables();
             }
-            match("}");
         }
-        // ListaInstrucciones -> Instruccion ListaInstrucciones?
+        //ListaInstrucciones -> Instruccion ListaInstrucciones?
         private void ListaInstrucciones()
         {
             Instruccion();
@@ -100,337 +82,170 @@ namespace Semanticabbc
                 ListaInstrucciones();
             }
         }
-        // Instruccion -> Console | If | While | Do | For | Asignacion
+        //BloqueInstrucciones -> { listaIntrucciones? }
+        private void BloqueInstrucciones()
+        {
+            match("{");
+            if(getContenido() != "}")
+            {
+                ListaInstrucciones();
+            }
+            match("}");
+        }
+        //Instruccion -> Console | If | While | do | For | Variables | Asignacion
         private void Instruccion()
         {
-            if (getClasificacion() == Tipos.TipoDato)
+            if (getContenido() == "console")
             {
-                Variables();
-            }
-            else if (getContenido() == "Console")
-            {
-                console();
+                Console();
             }
             else if (getContenido() == "if")
             {
-                If(evaluacion);
+                If();
             }
             else if (getContenido() == "while")
             {
-                While(evaluacion);
+                While();
             }
             else if (getContenido() == "do")
             {
-                Do(evaluacion);
+                Do();
             }
             else if (getContenido() == "for")
             {
-                For(evaluacion);
+                For();
             }
-            else
+            else if (getClasificacion() == Tipos.TipoDato)
             {
-                Asignacion(evaluacion);
+                Variables();
+            }
+            else {
+                Asignacion();
             }
         }
         // Asignacion -> Identificador = Expresion;
-        //               Identificador = Console.ReadLine();
-
-        private void Asignacion(bool evaluacion)
+        private void Asignacion()
         {
-            string nombre = getContenido();
-            float resultado = 0;
-            log.Write(nombre + "=");
-
-            if (!ExisteVariable(nombre))
-            {
-                throw new Error("de sintaxis, la variable <" + nombre + "> no está declarada", log);
-            }
             match(Tipos.Identificador);
-            if (getContenido() == "=")
-            {
-                match("=");
-                if (getContenido() == "Console")
-                {
-                    match("Console");
-                    match(".");
-                    if (getContenido() == "Read")
-                    {
-                        match("Read");
-                    }
-                    else if (getContenido() == "ReadLine")
-                    {
-                        match("ReadLine");
-                    }
-                    match("(");
-                    match(")");
-                    string value = "" + Console.ReadLine();
-                    s.Push(float.Parse(value));
-                    asm.WriteLine("call scan_num");
-                    asm.WriteLine("printn \"\"");
-                    asm.WriteLine("MOV AX, CX");
-                    asm.WriteLine("PUSH AX");
-
-                    resultado = s.Pop();
-                    modificaVariable(nombre, resultado);
-
-                }
-                else
-                {
-                    Expresion();
-                    resultado = s.Pop();
-                    modificaVariable(nombre, resultado);
-
-                }
-                asm.WriteLine("POP AX");
-                asm.WriteLine("MOV " + nombre + ",AX");
-
-            }
-            else if (getContenido() == "++")
-            {
-                match(Tipos.IncTermino);
-                resultado = Valor(nombre) + 1;
-
-                modificaVariable(nombre, resultado);
-                asm.WriteLine("INC " + nombre);
-                asm.WriteLine("MOV AX, " + nombre);
-                asm.WriteLine("PUSH AX");
-                asm.WriteLine("POP AX");
-                asm.WriteLine("MOV " + nombre + ",AX");
-
-            }
-            else if (getContenido() == "--")
-            {
-                match(Tipos.IncTermino);
-                resultado = Valor(nombre) - 1;
-                modificaVariable(nombre, resultado);
-                asm.WriteLine("DEC " + nombre);
-                asm.WriteLine("MOV AX, " + nombre);
-                asm.WriteLine("PUSH AX");
-                asm.WriteLine("POP AX");
-                asm.WriteLine("MOV " + nombre + ",AX");
-            }
-            else
-            {
-                if (getContenido() == "+=")
-                {
-                    match("+=");
-                    Expresion();
-                    resultado = Valor(nombre) + s.Pop();
-                    modificaVariable(nombre, resultado);
-                    asm.WriteLine("POP AX");
-                    asm.WriteLine("ADD " + nombre + ",AX");
-                    asm.WriteLine("MOV AX, " + nombre);
-                    asm.WriteLine("PUSH AX");
-                    asm.WriteLine("POP AX");
-                    asm.WriteLine("MOV " + nombre + ",AX");
-                }
-                else if (getContenido() == "-=")
-                {
-                    match("-=");
-                    Expresion();
-                    resultado = Valor(nombre) - s.Pop();
-                    modificaVariable(nombre, resultado);
-                    asm.WriteLine("POP AX");
-                    asm.WriteLine("SUB " + nombre + ",AX");
-                    asm.WriteLine("MOV AX, " + nombre);
-                    asm.WriteLine("PUSH AX");
-                    asm.WriteLine("POP AX");
-                    asm.WriteLine("MOV " + nombre + ",AX");
-                }
-                else if (getContenido() == "*=")
-                {
-                    match("*=");
-                    Expresion();
-                    resultado = Valor(nombre) * s.Pop();
-                    modificaVariable(nombre, resultado);
-                    asm.WriteLine("POP AX");
-                    asm.WriteLine("MOV BX, " + nombre);
-                    asm.WriteLine("MUL BX");
-                    asm.WriteLine("PUSH AX");
-                    asm.WriteLine("MOV " + nombre + ",AX");
-                }
-                else if (getContenido() == "/=")
-                {
-                    match("/=");
-                    Expresion();
-                    resultado = Valor(nombre) / s.Pop();
-                    modificaVariable(nombre, resultado);
-                    asm.WriteLine("POP BX");
-                    asm.WriteLine("MOV AX, " + nombre);
-                    asm.WriteLine("DIV BX");
-                    asm.WriteLine("PUSH BX");
-                    asm.WriteLine("MOV " + nombre + ",AX");
-                }
-                else if (getContenido() == "%=")
-                {
-                    match("%=");
-                    Expresion();
-                    resultado = Valor(nombre) % s.Pop();
-                    modificaVariable(nombre, resultado);
-                    asm.WriteLine("POP AX");
-                    asm.WriteLine("MOV BX, " + nombre);
-                    asm.WriteLine("DIV BX");
-                    asm.WriteLine("PUSH DX");
-                    asm.WriteLine("MOV " + nombre + ", DX");
-                }
-
-
-            }
+            match("=");
+            Expresion();
             match(";");
-            asm.WriteLine();
-
-
-
         }
         // If -> if (Condicion) bloqueInstrucciones | instruccion
-        //       (else bloqueInstrucciones | instruccion)?
-        private void If(bool evaluacion)
+        //    (else bloqueInstrucciones | instruccion)?
+        private void If()
         {
             match("if");
             match("(");
-            bool EvaluaIF = Condicion() && evaluacion;
+            Condicion();
             match(")");
-            if (getContenido() == "{")
+            if (getContenido()=="{")
             {
-                BloqueInstrucciones(EvaluaIF);
+                BloqueInstrucciones();
             }
-            else
-            {
-                Instruccion(EvaluaIF);
+            else{
+                Instruccion();
             }
-            if (getContenido() == "else")
-            {
+
+            if (getContenido() == "else"){
                 match("else");
                 if (getContenido() == "{")
                 {
-                    BloqueInstrucciones(!EvaluaIF);
+                    BloqueInstrucciones();
                 }
                 else
                 {
-                    Instruccion(!EvaluaIF);
+                    Instruccion();
                 }
             }
         }
-
-        // Condicion -> Expresion operadorRelacional Expresion
-        private bool Condicion(bool evaluacion)
+        //Condicion -> Expresion operadorRelacional Expresion
+        private void Condicion()
         {
-            Expresion(); // E1
-            string operador = getContenido();
+            Expresion();
             match(Tipos.OpRelacional);
-            Expresion(); // E2
-            float R2 = s.Pop();
-            float R1 = s.Pop();
-            switch (operador)
-            {
-                case ">": return R1 > R2;
-                case ">=": return R1 >= R2;
-                case "<": return R1 < R2;
-                case "<=": return R1 <= R2;
-                case "==": return R1 == R2;
-                default: return R1 != R2;
-            }
-
+            Expresion();
         }
-
-        // While -> while(Condicion) bloqueInstrucciones | instruccion
-        private void While(bool evaluacion)
+        //While -> while(Condicion) bloqueInstrucciones | instruccion
+        private void While()
         {
             match("while");
             match("(");
-            bool EvaluaWHILE = Condicion(evaluacion) && evaluacion;
-            Console.WriteLine(Condicion(evaluacion));
+            Condicion();
             match(")");
-            if (getContenido() == "{")
+            if (getContenido()=="{")
             {
-                BloqueInstrucciones(EvaluaWHILE);
+                BloqueInstrucciones();
             }
-            else
-            {
-                Instruccion(EvaluaWHILE);
+            else{
+                Instruccion();
             }
-        }
-        // Do -> do 
-        //         bloqueInstrucciones | instruccion 
-        //       while(Condicion);
-        private void Do(bool evaluacion)
 
+        }
+        //Do -> do 
+        //        bloqueInstrucciones | intruccion 
+        //    while(Condicion);
+        private void Do()
         {
             match("do");
-            bool EvaluaDO = Condicion(evaluacion) && evaluacion;
-            if (getContenido() == "{")
+            if (getContenido()=="{")
             {
-                BloqueInstrucciones(EvaluaDO);
+                BloqueInstrucciones();
             }
-            else
-            {
-                Instruccion(EvaluaDO);
+            else{
+                Instruccion();
             }
             match("while");
             match("(");
-            Console.WriteLine(Condicion(evaluacion));
+            Condicion();
             match(")");
-
-        }
-
-        // For -> for(Asignacion Condicion; Incremento) 
-        //        BloqueInstrucciones | Instruccion 
-        private void For(bool evaluacion)
+            match(";");
+        }    
+        //For -> for(Asignacion Condicion; Incremento) 
+        //    BloqueInstrucciones | Intruccion 
+        private void For()
         {
             match("for");
             match("(");
-            Asignacion(evaluacion);
-            bool EvaluaFOR = Condicion(evaluacion) && evaluacion;
-            Console.WriteLine(Condicion(evaluacion));
+            Asignacion();
+            Condicion();
             match(";");
             Incremento();
             match(")");
-            if (getContenido() == "{")
+            if (getContenido()=="{")
             {
-                BloqueInstrucciones(EvaluaFOR);
+                BloqueInstrucciones();
             }
-            else
-            {
-                Instruccion(EvaluaFOR);
+            else{
+                Instruccion();
             }
         }
         // Incremento -> Identificador ++ | --
         private void Incremento()
         {
-
-            string nombre = getContenido();
-            float resultado = 0;
-            if (!ExisteVariable(nombre))
-            {
-                throw new Error("de sintaxis, la variable <" + nombre + "> no está declarada", log);
-            }
             match(Tipos.Identificador);
             if (getContenido() == "++")
             {
-                asm.WriteLine("INC " + nombre + "\n");
-                resultado = Valor(nombre) + 1;
                 match("++");
             }
             else
             {
-                asm.WriteLine("DEC " + nombre + "\n");
-                resultado = Valor(nombre) - 1;
                 match("--");
             }
         }
-        // console -> Console.(WriteLine|Write) (cadena); |
-        //            Console.(Read | ReadLine) ();
-        private void console(bool evaluacion)
+        //Console -> Console.(WriteLine|Write) (cadena?); |
+        //        Console.(Read | ReadLine) ();
+        private void Console()
         {
             match("Console");
             match(".");
-            if (getContenido() == "WriteLine" || getContenido() == "Write")
+            if (getContenido() == "WriteLine"|| getContenido() == "Write")
             {
                 match(getContenido());
                 match("(");
                 if (getClasificacion() == Tipos.Cadena)
                 {
-                    match(Tipos.Cadena); //optativa
+                    match(Tipos.Cadena);
                 }
                 match(")");
             }
@@ -444,9 +259,10 @@ namespace Semanticabbc
                 {
                     match("Read");
                 }
+                match("(");
+                match(")");
             }
-
-
+            match(";");
         }
         // Main      -> static void Main(string[] args) BloqueInstrucciones 
         private void Main()
@@ -459,47 +275,40 @@ namespace Semanticabbc
             match("[");
             match("]");
             match("args");
-            match(")");
+            match(")"); 
             BloqueInstrucciones();
-
-
         }
-        // Expresion -> Termino MasTermino
+        //Expresion -> Termino MasTermino
         private void Expresion()
         {
             Termino();
             MasTermino();
         }
         // MasTermino -> (OperadorTermino Termino)?
-
         private void MasTermino()
         {
-            if (getClasificacion() == Tipos.OpTermino)
+            if(getClasificacion() == Tipos.OpTermino)
             {
                 match(Tipos.OpTermino);
                 Termino();
             }
         }
-
-        // Termino -> Factor PorFactor
+        //Termino -> Factor PorFactor
         private void Termino()
         {
             Factor();
             PorFactor();
         }
-        // PorFactor -> (OperadorFactor Factor)?
+        //PorFactor -> (OperadorFactor Factor)?
         private void PorFactor()
         {
-            if (getClasificacion() == Tipos.OpFactor)
+            if(getClasificacion() == Tipos.OpFactor)
             {
-
                 match(Tipos.OpFactor);
                 Factor();
-
             }
         }
-
-        // Factor -> numero | identificador | (Expresion)
+        //Factor -> numero | identificador | (Expresion)
         private void Factor()
         {
             if (getClasificacion() == Tipos.Numero)
@@ -514,11 +323,9 @@ namespace Semanticabbc
             {
                 match("(");
                 Expresion();
-                match("(");
-
+                match(")");
             }
         }
-
-
+       
     }
 }

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using Semantica;
 using Semanticabbc;
 /*
     1.Colocar el numero de linea de errores lexicos y sintacticos
@@ -12,15 +14,18 @@ using Semanticabbc;
 
 namespace Semanticabbc
 {
+    
     public class Lenguaje : Sintaxis
     {
+        List<Variable> listaVariables;
         public Lenguaje()
         {
+            listaVariables = new List<Variable>();         
         }
 
         public Lenguaje(string nombre) : base (nombre)
         {
-
+            listaVariables = new List<Variable>(); 
         }
         //Programa  -> Librerias? Variables? Main
         public void Programa()
@@ -53,20 +58,30 @@ namespace Semanticabbc
             }                
         }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
-        private void ListaIdentificadores()
+        private void ListaIdentificadores(Variable.TipoDato t)
         {
+            
             match(Tipos.Identificador);
             if (getContenido() == ",")
             {
                 match(",");
-                ListaIdentificadores();
+                ListaIdentificadores(t);
             }
         }
         //Variables -> tipo_dato Lista_identificadores; Variables?
         private void Variables()
         {
+           Variable.TipoDato tipo = Variable.TipoDato.Char;
+            switch (getContenido())
+            {
+                case "int": tipo = Variable.TipoDato.Int;
+                break;
+                case "float": tipo = Variable.TipoDato.Float;
+                break;
+            }
+            
             match(Tipos.TipoDato);
-            ListaIdentificadores();
+            ListaIdentificadores(tipo);
             match(";");
             if (getClasificacion() == Tipos.TipoDato)
             {

@@ -7,9 +7,10 @@ using Semantica;
 using Semanticabbc;
 /*
     1.Colocar el numero de linea de errores lexicos y sintacticos
-    2.Cambiar la clase token por atributos publicots(get, set)
+    2.Cambiar la clase token por atributos publicos(get, set)
     3.Cambiar los constructores de la clase lexico usando parametros
     por default
+    que es el posfijo
 */
 
 namespace Semanticabbc
@@ -35,6 +36,7 @@ namespace Semanticabbc
                 Librerias();
             }
             Main();
+            imprimeVariables();
         }    
         //Librerias -> using ListaLibrerias; Librerias?
         private void Librerias()
@@ -57,10 +59,17 @@ namespace Semanticabbc
                 ListaLibrerias();
             }                
         }
+        private void imprimeVariables()
+        {
+            foreach (Variable v in listaVariables)
+            {
+                log.WriteLine(v.getNombre()+" ( "+v.getTipo()+" ) = "+v.getValor());
+            }
+        }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoDato t)
         {
-            
+            listaVariables.Add(new Variable(getContenido(),t));            
             match(Tipos.Identificador);
             if (getContenido() == ",")
             {
@@ -68,25 +77,25 @@ namespace Semanticabbc
                 ListaIdentificadores(t);
             }
         }
-        //Variables -> tipo_dato Lista_identificadores; Variables?
-        private void Variables()
+        Variable.TipoDato getTipo(string TipoDato)
         {
-           Variable.TipoDato tipo = Variable.TipoDato.Char;
-            switch (getContenido())
+             Variable.TipoDato tipo = Variable.TipoDato.Char;
+            switch (TipoDato)
             {
                 case "int": tipo = Variable.TipoDato.Int;
                 break;
                 case "float": tipo = Variable.TipoDato.Float;
                 break;
             }
-            
+            return tipo;
+        }
+        //Variables -> tipo_dato Lista_identificadores; Variables?
+        private void Variables()
+        {
+            Variable.TipoDato tipo = getTipo(getContenido());
             match(Tipos.TipoDato);
             ListaIdentificadores(tipo);
             match(";");
-            if (getClasificacion() == Tipos.TipoDato)
-            {
-                Variables();
-            }
         }
         //ListaInstrucciones -> Instruccion ListaInstrucciones?
         private void ListaInstrucciones()
@@ -337,6 +346,12 @@ namespace Semanticabbc
             else
             {
                 match("(");
+                if (getClasificacion() == Tipos.TipoDato)
+                {
+                    match(Tipos.TipoDato);
+                    match(")");
+                    match("(");
+                }
                 Expresion();
                 match(")");
             }

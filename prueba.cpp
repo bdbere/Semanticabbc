@@ -5,10 +5,19 @@ using System.Threading.Tasks;
 
 static void Main(string[] args)
 {
-    char a,a,a;
-    float pi;
-    int rex;
+    char a,a,b,c,d;
+    float pi,e;
 
+
+    a=(int)((3 + 5) * 8 - (10 - 4) / 2);
+
+    char i;
+    
+    i=300;
+
+    i=(char)(300);
+
+    /*
     Console.Write("Proyecto 6");
     Console.WriteLine(" - ITQ");
     Console.ReadLine();
@@ -34,5 +43,10 @@ static void Main(string[] args)
     {
         a = 200;
         Console.WriteLine("Entró al ELSE");
+        for(i=0; i<10; i++)
+        {
+            Console.WriteLine("ENTRO AL FOR");
+        }
     }
+    */
 }

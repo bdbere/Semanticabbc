@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 //Clase variable
-namespace Semantica
+namespace Semanticabbc
 {
     public class Variable
     {

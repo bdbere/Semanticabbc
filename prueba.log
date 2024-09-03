@@ -71,23 +71,9 @@ int = TipoDato
 2 = Numero
 ) = Caracter
 ; = FinSentencia
-char = TipoDato
-i = Identificador
-; = FinSentencia
-i = Identificador
-= = Asignacion
-300 = Numero
-; = FinSentencia
-i = Identificador
-= = Asignacion
-( = Caracter
-char = TipoDato
-) = Caracter
-( = Caracter
-300 = Numero
-) = Caracter
-; = FinSentencia
 } = Fin
+Stack: 61 
+a = 61
 ￿ = Caracter
 a ( Char ) = 0
 a ( Char ) = 0
@@ -96,4 +82,3 @@ c ( Char ) = 0
 d ( Char ) = 0
 pi ( Float ) = 0
 e ( Float ) = 0
-i ( Char ) = 0

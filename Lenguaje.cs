@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
-using Semantica;
 using Semanticabbc;
 /*
     1.Colocar el numero de linea de errores lexicos y sintacticos
     2.Cambiar la clase token por atributos publicos(get, set)
     3.Cambiar los constructores de la clase lexico usando parametros
     por default
-    que es el posfijo
+    que es el postfijo
 */
 
 namespace Semanticabbc
@@ -18,15 +17,19 @@ namespace Semanticabbc
     
     public class Lenguaje : Sintaxis
     {
-        List<Variable> listaVariables;
+        private List<Variable> listaVariables;
+        private Stack<float> s;
+
         public Lenguaje()
         {
-            listaVariables = new List<Variable>();         
+            listaVariables = new List<Variable>();
+            s = new Stack<float>();         
         }
 
         public Lenguaje(string nombre) : base (nombre)
         {
-            listaVariables = new List<Variable>(); 
+            listaVariables = new List<Variable>();
+            s = new Stack<float>(); 
         }
         //Programa  -> Librerias? Variables? Main
         public void Programa()
@@ -150,10 +153,13 @@ namespace Semanticabbc
         // Asignacion -> Identificador = Expresion;
         private void Asignacion()
         {
+            string variable = getContenido();
             match(Tipos.Identificador);
             match("=");
             Expresion();
             match(";");
+            imprimeStack();
+            log.WriteLine(variable + " = " + s.Pop());
         }
         // If -> if (Condicion) bloqueInstrucciones | instruccion
         //    (else bloqueInstrucciones | instruccion)?
@@ -313,8 +319,16 @@ namespace Semanticabbc
         {
             if(getClasificacion() == Tipos.OpTermino)
             {
+                string operador = getContenido();
                 match(Tipos.OpTermino);
                 Termino();
+                float R1= s.Pop();
+                float R2= s.Pop();
+                switch(operador)
+                {
+                    case "+": s.Push(R2+R1); break;
+                    case "-": s.Push(R2-R1); break;
+                }
             }
         }
         //Termino -> Factor PorFactor
@@ -328,15 +342,35 @@ namespace Semanticabbc
         {
             if(getClasificacion() == Tipos.OpFactor)
             {
+                string operador = getContenido();
                 match(Tipos.OpFactor);
                 Factor();
+                float R1= s.Pop();
+                float R2= s.Pop();
+                switch(operador)
+                {
+                    case "*": s.Push(R2*R1); break;
+                    case "/": s.Push(R2/R1); break;
+                    case "%": s.Push(R2%R1); break;
+                }
             }
+        }
+
+        private void imprimeStack()
+        {
+            log.Write("Stack: ");
+            foreach (float e in s.Reverse())
+            {
+                log.Write(e + " ");
+            }
+            log.WriteLine();
         }
         //Factor -> numero | identificador | (Expresion)
         private void Factor()
         {
             if (getClasificacion() == Tipos.Numero)
             {
+                s.Push(float.Parse(getContenido()));
                 match(Tipos.Numero);
             }
             else if (getClasificacion() == Tipos.Identificador)

@@ -9,12 +9,17 @@ using Semanticabbc;
     2.Cambiar la clase token por atributos publicos(get, set)
     3.Cambiar los constructores de la clase lexico usando parametros
     por default
+    4. Error semantico
     que es el postfijo
+    char - 0...255 (1 byte)
+    int - De 0 a 65.535
+    float - De -3.4028234663852886E+38 a 3.4028234663852886E+38
+    
 */
 
 namespace Semanticabbc
 {
-    
+
     public class Lenguaje : Sintaxis
     {
         private List<Variable> listaVariables;
@@ -23,24 +28,24 @@ namespace Semanticabbc
         public Lenguaje()
         {
             listaVariables = new List<Variable>();
-            s = new Stack<float>();         
+            s = new Stack<float>();
         }
 
-        public Lenguaje(string nombre) : base (nombre)
+        public Lenguaje(string nombre) : base(nombre)
         {
             listaVariables = new List<Variable>();
-            s = new Stack<float>(); 
+            s = new Stack<float>();
         }
         //Programa  -> Librerias? Variables? Main
         public void Programa()
         {
-            if (getContenido()== "using")
+            if (getContenido() == "using")
             {
                 Librerias();
             }
             Main();
             imprimeVariables();
-        }    
+        }
         //Librerias -> using ListaLibrerias; Librerias?
         private void Librerias()
         {
@@ -56,23 +61,23 @@ namespace Semanticabbc
         private void ListaLibrerias()
         {
             match(Tipos.Identificador);
-            if(getContenido() == ".")
+            if (getContenido() == ".")
             {
                 match(".");
                 ListaLibrerias();
-            }                
+            }
         }
         private void imprimeVariables()
         {
             foreach (Variable v in listaVariables)
             {
-                log.WriteLine(v.getNombre()+" ( "+v.getTipo()+" ) = "+v.getValor());
+                log.WriteLine(v.getNombre() + " ( " + v.getTipo() + " ) = " + v.getValor());
             }
         }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoDato t)
         {
-            listaVariables.Add(new Variable(getContenido(),t));            
+            listaVariables.Add(new Variable(getContenido(), t));
             match(Tipos.Identificador);
             if (getContenido() == ",")
             {
@@ -82,13 +87,15 @@ namespace Semanticabbc
         }
         Variable.TipoDato getTipo(string TipoDato)
         {
-             Variable.TipoDato tipo = Variable.TipoDato.Char;
+            Variable.TipoDato tipo = Variable.TipoDato.Char;
             switch (TipoDato)
             {
-                case "int": tipo = Variable.TipoDato.Int;
-                break;
-                case "float": tipo = Variable.TipoDato.Float;
-                break;
+                case "int":
+                    tipo = Variable.TipoDato.Int;
+                    break;
+                case "float":
+                    tipo = Variable.TipoDato.Float;
+                    break;
             }
             return tipo;
         }
@@ -113,7 +120,7 @@ namespace Semanticabbc
         private void BloqueInstrucciones()
         {
             match("{");
-            if(getContenido() != "}")
+            if (getContenido() != "}")
             {
                 ListaInstrucciones();
             }
@@ -146,20 +153,74 @@ namespace Semanticabbc
             {
                 Variables();
             }
-            else {
+            else
+            {
                 Asignacion();
             }
         }
-        // Asignacion -> Identificador = Expresion;
+        // Asignacion -> Identificador = Expresion; |Solo esta opción se evalua semanticamente 
+        // Id ++;
+        // Id --;
+        //Id += Expresion;
+        //Id -= Expresion;
+        //Id *= Expresion;
+        //Id /= Expresion;
+        //Id %= Expresion;
+        /* Meter todos los casos*/
+
+
         private void Asignacion()
         {
             string variable = getContenido();
             match(Tipos.Identificador);
-            match("=");
-            Expresion();
+            if (getContenido() == "=")
+            {
+                match("=");
+                Expresion();
+                imprimeStack();
+                log.WriteLine(variable + " = " + s.Pop());
+            }
+            else if (getContenido() == "++")
+            {
+                match("++");
+
+            }
+            else if (getContenido() == "--")
+            {
+                match("--");
+            }
+            else if (getContenido() == "+=")
+            {
+                match("+=");
+                Expresion();
+
+            }
+            else if (getContenido() == "-=")
+            {
+                match("-=");
+                Expresion();
+
+            }
+            else if (getContenido() == "*=")
+            {
+                match("*=");
+                Expresion();
+
+            }
+            else if (getContenido() == "/=")
+            {
+                match("/=");
+                Expresion();
+
+            }
+            else if (getContenido() == "%=")
+            {
+                match("%=");
+                Expresion();
+
+            }
             match(";");
-            imprimeStack();
-            log.WriteLine(variable + " = " + s.Pop());
+
         }
         // If -> if (Condicion) bloqueInstrucciones | instruccion
         //    (else bloqueInstrucciones | instruccion)?
@@ -169,15 +230,17 @@ namespace Semanticabbc
             match("(");
             Condicion();
             match(")");
-            if (getContenido()=="{")
+            if (getContenido() == "{")
             {
                 BloqueInstrucciones();
             }
-            else{
+            else
+            {
                 Instruccion();
             }
 
-            if (getContenido() == "else"){
+            if (getContenido() == "else")
+            {
                 match("else");
                 if (getContenido() == "{")
                 {
@@ -203,11 +266,12 @@ namespace Semanticabbc
             match("(");
             Condicion();
             match(")");
-            if (getContenido()=="{")
+            if (getContenido() == "{")
             {
                 BloqueInstrucciones();
             }
-            else{
+            else
+            {
                 Instruccion();
             }
 
@@ -218,11 +282,12 @@ namespace Semanticabbc
         private void Do()
         {
             match("do");
-            if (getContenido()=="{")
+            if (getContenido() == "{")
             {
                 BloqueInstrucciones();
             }
-            else{
+            else
+            {
                 Instruccion();
             }
             match("while");
@@ -230,7 +295,7 @@ namespace Semanticabbc
             Condicion();
             match(")");
             match(";");
-        }    
+        }
         //For -> for(Asignacion Condicion; Incremento) 
         //    BloqueInstrucciones | Intruccion 
         private void For()
@@ -242,11 +307,12 @@ namespace Semanticabbc
             match(";");
             Incremento();
             match(")");
-            if (getContenido()=="{")
+            if (getContenido() == "{")
             {
                 BloqueInstrucciones();
             }
-            else{
+            else
+            {
                 Instruccion();
             }
         }
@@ -269,7 +335,7 @@ namespace Semanticabbc
         {
             match("Console");
             match(".");
-            if (getContenido() == "WriteLine"|| getContenido() == "Write")
+            if (getContenido() == "WriteLine" || getContenido() == "Write")
             {
                 match(getContenido());
                 match("(");
@@ -305,7 +371,7 @@ namespace Semanticabbc
             match("[");
             match("]");
             match("args");
-            match(")"); 
+            match(")");
             BloqueInstrucciones();
         }
         //Expresion -> Termino MasTermino
@@ -317,17 +383,17 @@ namespace Semanticabbc
         // MasTermino -> (OperadorTermino Termino)?
         private void MasTermino()
         {
-            if(getClasificacion() == Tipos.OpTermino)
+            if (getClasificacion() == Tipos.OpTermino)
             {
                 string operador = getContenido();
                 match(Tipos.OpTermino);
                 Termino();
-                float R1= s.Pop();
-                float R2= s.Pop();
-                switch(operador)
+                float R1 = s.Pop();
+                float R2 = s.Pop();
+                switch (operador)
                 {
-                    case "+": s.Push(R2+R1); break;
-                    case "-": s.Push(R2-R1); break;
+                    case "+": s.Push(R2 + R1); break;
+                    case "-": s.Push(R2 - R1); break;
                 }
             }
         }
@@ -340,18 +406,18 @@ namespace Semanticabbc
         //PorFactor -> (OperadorFactor Factor)?
         private void PorFactor()
         {
-            if(getClasificacion() == Tipos.OpFactor)
+            if (getClasificacion() == Tipos.OpFactor)
             {
                 string operador = getContenido();
                 match(Tipos.OpFactor);
                 Factor();
-                float R1= s.Pop();
-                float R2= s.Pop();
-                switch(operador)
+                float R1 = s.Pop();
+                float R2 = s.Pop();
+                switch (operador)
                 {
-                    case "*": s.Push(R2*R1); break;
-                    case "/": s.Push(R2/R1); break;
-                    case "%": s.Push(R2%R1); break;
+                    case "*": s.Push(R2 * R1); break;
+                    case "/": s.Push(R2 / R1); break;
+                    case "%": s.Push(R2 % R1); break;
                 }
             }
         }
@@ -390,6 +456,6 @@ namespace Semanticabbc
                 match(")");
             }
         }
-       
+
     }
 }

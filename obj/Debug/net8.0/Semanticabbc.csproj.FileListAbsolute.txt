@@ -13,3 +13,18 @@ C:\Users\mokka\OneDrive\Imágenes\Universidad\Quinto semestre\LyAII\proyectos\se
 C:\Users\mokka\OneDrive\Imágenes\Universidad\Quinto semestre\LyAII\proyectos\semanticabbc\Semanticabbc\obj\Debug\net8.0\Semanticabbc.pdb
 C:\Users\mokka\OneDrive\Imágenes\Universidad\Quinto semestre\LyAII\proyectos\semanticabbc\Semanticabbc\obj\Debug\net8.0\Semanticabbc.genruntimeconfig.cache
 C:\Users\mokka\OneDrive\Imágenes\Universidad\Quinto semestre\LyAII\proyectos\semanticabbc\Semanticabbc\obj\Debug\net8.0\ref\Semanticabbc.dll
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\bin\Debug\net8.0\Semanticabbc.exe
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\bin\Debug\net8.0\Semanticabbc.deps.json
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\bin\Debug\net8.0\Semanticabbc.runtimeconfig.json
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\bin\Debug\net8.0\Semanticabbc.dll
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\bin\Debug\net8.0\Semanticabbc.pdb
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.AssemblyInfoInputs.cache
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.AssemblyInfo.cs
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.csproj.CoreCompileInputs.cache
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.sourcelink.json
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.dll
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\refint\Semanticabbc.dll
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.pdb
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.genruntimeconfig.cache
+C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\ref\Semanticabbc.dll

@@ -10,7 +10,7 @@ static void Main(string[] args)
     float pi,e;
 
 
-    a=(int)((3 + 5) * 8 - (10 - 4) / 2);
-    r=66000;
+    a=(int)((3 + 5) * 8 - (10 - 4) / 2); 
+    r=100;
 
 }

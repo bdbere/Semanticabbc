@@ -76,13 +76,11 @@ int = TipoDato
 ; = FinSentencia
 r = Identificador
 Stack: 61 
-a = 61
 = = Asignacion
-66000 = Numero
+100 = Numero
 ; = FinSentencia
 } = Fin
-Stack: 66000 
-r = 66000
+Stack: 100 
 ￿ = Caracter
 a ( Char ) = 0
 a ( Char ) = 0

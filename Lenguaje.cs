@@ -74,6 +74,18 @@ namespace Semanticabbc
                 log.WriteLine(v.getNombre() + " ( " + v.getTipo() + " ) = " + v.getValor());
             }
         }
+
+        private Variable.TipoDato buscarVariable(string nombre)
+        {
+            foreach (Variable v in listaVariables)
+            {
+                if (v.getNombre() == nombre)
+                {
+                    return v.getTipo();
+                }
+            }
+            throw new Exception("La variable " + nombre + " no ha sido declarada");
+        }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoDato t)
         {
@@ -177,8 +189,6 @@ namespace Semanticabbc
             {
                 match("=");
                 Expresion();
-                imprimeStack();
-                log.WriteLine(variable + " = " + s.Pop());
             }
             else if (getContenido() == "++")
             {
@@ -220,6 +230,26 @@ namespace Semanticabbc
 
             }
             match(";");
+            imprimeStack();
+            float value = s.Pop();
+            Variable.TipoDato tipo = buscarVariable(variable);
+
+            switch (tipo)
+            {
+                case Variable.TipoDato.Char:
+                    if (value < 0 || value > 255)
+                    {
+                        throw new Exception("El valor asignado a " + variable + " excede el rango de un char");
+                    }
+                    break;
+                case Variable.TipoDato.Int:
+                    // Verificamos si el valor es entero y que esté dentro del rango de int
+                    if (value < 0 || value > 65535)
+                    {
+                        throw new Exception("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero.");
+                    }
+                    break;
+            }
 
         }
         // If -> if (Condicion) bloqueInstrucciones | instruccion

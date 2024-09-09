@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mokka\\OneDrive\\Imágenes\\Universidad\\Quinto semestre\\LyAII\\proyectos\\semanticabbc\\Semanticabbc\\Semanticabbc.csproj": {}
+    "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mokka\\OneDrive\\Imágenes\\Universidad\\Quinto semestre\\LyAII\\proyectos\\semanticabbc\\Semanticabbc\\Semanticabbc.csproj": {
+    "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mokka\\OneDrive\\Imágenes\\Universidad\\Quinto semestre\\LyAII\\proyectos\\semanticabbc\\Semanticabbc\\Semanticabbc.csproj",
+        "projectUniqueName": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj",
         "projectName": "Semanticabbc",
-        "projectPath": "C:\\Users\\mokka\\OneDrive\\Imágenes\\Universidad\\Quinto semestre\\LyAII\\proyectos\\semanticabbc\\Semanticabbc\\Semanticabbc.csproj",
-        "packagesPath": "C:\\Users\\mokka\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mokka\\OneDrive\\Imágenes\\Universidad\\Quinto semestre\\LyAII\\proyectos\\semanticabbc\\Semanticabbc\\obj\\",
+        "projectPath": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj",
+        "packagesPath": "C:\\Users\\Belen Sanchez\\.nuget\\packages\\",
+        "outputPath": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\mokka\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Belen Sanchez\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"

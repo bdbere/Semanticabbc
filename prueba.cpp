@@ -11,6 +11,7 @@ static void Main(string[] args)
 
 
     a=(int)((3 + 5) * 8 - (10 - 4) / 2); 
-    r=100;
+    r=60.3;
+    pi=60.3;
 
 }

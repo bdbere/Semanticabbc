@@ -243,14 +243,13 @@ namespace Semanticabbc
                     }
                     break;
                 case Variable.TipoDato.Int:
-                    // Verificamos si el valor es entero y que esté dentro del rango de int
-                    if (value < 0 || value > 65535)
+                    if (value < 0 || value > 65535 || value != Math.Floor(value))
                     {
                         throw new Exception("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero.");
                     }
                     break;
+                   
             }
-
         }
         // If -> if (Condicion) bloqueInstrucciones | instruccion
         //    (else bloqueInstrucciones | instruccion)?

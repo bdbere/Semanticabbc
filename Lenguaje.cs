@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using Semanticabbc;
 /*
     1.Colocar el numero de linea de errores lexicos y sintacticos
-    2.Cambiar la clase token por atributos publicos(get, set)
+    2.Cambiar la clase token por atributos privados(get, set)
     3.Cambiar los constructores de la clase lexico usando parametros
     por default
     4. Error semantico
     que es el postfijo
-    char - 0...255 (1 byte)
-    int - De 0 a 65.535
-    float - De -3.4028234663852886E+38 a 3.4028234663852886E+38
+    
+    char - 0...255 (1 byte) listo
+    int - De 0 a 65.535 listo
+   
     
 */
 

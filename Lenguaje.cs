@@ -74,7 +74,7 @@ namespace Semanticabbc
                 log.WriteLine(v.getNombre() + " ( " + v.getTipo() + " ) = " + v.getValor());
             }
         }
-
+        //Metodo para error semantico - Busqueda de Variable
         private Variable.TipoDato buscarVariable(string nombre)
         {
             foreach (Variable v in listaVariables)

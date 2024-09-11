@@ -28,3 +28,18 @@ C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo 
 C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.pdb
 C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\Semanticabbc.genruntimeconfig.cache
 C:\Users\beren\Documents\ITQ\Semestre 7\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\Semanticabbc\obj\Debug\net8.0\ref\Semanticabbc.dll
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\bin\Debug\net8.0\Semanticabbc.exe
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\bin\Debug\net8.0\Semanticabbc.deps.json
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\bin\Debug\net8.0\Semanticabbc.runtimeconfig.json
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\bin\Debug\net8.0\Semanticabbc.dll
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\bin\Debug\net8.0\Semanticabbc.pdb
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\Semanticabbc.GeneratedMSBuildEditorConfig.editorconfig
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\Semanticabbc.AssemblyInfoInputs.cache
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\Semanticabbc.AssemblyInfo.cs
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\Semanticabbc.csproj.CoreCompileInputs.cache
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\Semanticabbc.sourcelink.json
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\Semanticabbc.dll
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\refint\Semanticabbc.dll
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\Semanticabbc.pdb
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\Semanticabbc.genruntimeconfig.cache
+D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\obj\Debug\net8.0\ref\Semanticabbc.dll

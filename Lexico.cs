@@ -51,6 +51,7 @@ namespace Semanticabbc
             {F,F, 32, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F}
 
         };
+<<<<<<< HEAD
         public Lexico() // Constructor
         {
             linea = 1;
@@ -69,15 +70,15 @@ namespace Semanticabbc
             archivo = new StreamReader("Prueba.cpp");
         }
         public Lexico(string nombre) // Constructor
+=======
+        public Lexico(string nombre = "prueba.cpp") // Constructor
+>>>>>>> 90aa1b2a595d00e9a0e970d28525267cf931b7e4
         {
             linea = 1;
             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
             log.AutoFlush = true;
             asm = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".asm");
             asm.AutoFlush = true;
-            log.WriteLine("Analizador Lexico");
-            log.WriteLine("Autor: Rafael Mejía");
-            asm.WriteLine("; Autor: Rafael Mejía");
 
             if (Path.GetExtension(nombre) != ".cpp")
             {

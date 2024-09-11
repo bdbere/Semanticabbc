@@ -11,9 +11,16 @@ using Semanticabbc;
     por default
     4. Error semantico
     que es el postfijo
+<<<<<<< HEAD
     char - 0...255 (1 byte)
     int - De 0 a 65.535
     
+=======
+    
+    char - 0...255 (1 byte) listo
+    int - De 0 a 65.535 listo
+   
+>>>>>>> 90aa1b2a595d00e9a0e970d28525267cf931b7e4
     
 */
 
@@ -22,6 +29,7 @@ namespace Semanticabbc
 
     public class Lenguaje : Sintaxis
     {
+        Token token = new Token();
         private List<Variable> listaVariables;
         private Stack<float> s;
 
@@ -74,7 +82,7 @@ namespace Semanticabbc
                 log.WriteLine(v.getNombre() + " ( " + v.getTipo() + " ) = " + v.getValor());
             }
         }
-
+        //Metodo para error semantico - Busqueda de Variable
         private Variable.TipoDato buscarVariable(string nombre)
         {
             foreach (Variable v in listaVariables)
@@ -185,12 +193,8 @@ namespace Semanticabbc
         {
             string variable = getContenido();
             match(Tipos.Identificador);
-            if (getContenido() == "=")
-            {
-                match("=");
-                Expresion();
-            }
-            else if (getContenido() == "++")
+    
+            if (getContenido() == "++")
             {
                 match("++");
 
@@ -199,37 +203,60 @@ namespace Semanticabbc
             {
                 match("--");
             }
+            else if (getContenido() == "=")
+            {
+                match("=");
+            }
             else if (getContenido() == "+=")
             {
                 match("+=");
-                Expresion();
 
             }
             else if (getContenido() == "-=")
             {
                 match("-=");
-                Expresion();
 
             }
             else if (getContenido() == "*=")
             {
                 match("*=");
-                Expresion();
 
             }
             else if (getContenido() == "/=")
             {
                 match("/=");
-                Expresion();
 
             }
             else if (getContenido() == "%=")
             {
                 match("%=");
-                Expresion();
 
             }
+            if (getClasificacion() == Tipos.Numero || getClasificacion() == Tipos.Identificador || getContenido() == "(")
+            {
+                Expresion();
+                float value = s.Pop();
+                Variable.TipoDato tipo = buscarVariable(variable);
+
+                switch (tipo)
+                {
+                    case Variable.TipoDato.Char:
+                        if (value < 0 || value > 255)
+                        {
+                            throw new Exception("El valor asignado a " + variable + " excede el rango de un char");
+                        }
+                        break;
+                    case Variable.TipoDato.Int:
+                        if (value < 0 || value > 65535 || value != Math.Floor(value))
+                        {
+                            throw new Exception("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero.");
+                        }
+                        break;
+
+                }
+            }
             match(";");
+<<<<<<< HEAD
             imprimeStack();
             float value = s.Pop();
             Variable.TipoDato tipo = buscarVariable(variable);
@@ -252,6 +279,10 @@ namespace Semanticabbc
                     break;
             }
 
+=======
+            //imprimeStack();
+            
+>>>>>>> 90aa1b2a595d00e9a0e970d28525267cf931b7e4
         }
         // If -> if (Condicion) bloqueInstrucciones | instruccion
         //    (else bloqueInstrucciones | instruccion)?

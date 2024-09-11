@@ -57,6 +57,7 @@ namespace Semanticabbc
             log.AutoFlush = true;
             asm = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".asm");
             asm.AutoFlush = true;
+            linea=1;
 
             if (Path.GetExtension(nombre) != ".cpp")
             {
@@ -227,22 +228,27 @@ namespace Semanticabbc
                     {
                         buffer += c;
                     }
+                    
                     archivo.Read();
+                    if(c=='\n')
+                    {
+                        linea++;
+                    }
                 }
             }
             if (Estado == E)
             {
                 if (getClasificacion() == Tipos.Numero)
                 {
-                    throw new Error(" Se espera un digito " + buffer, log);
+                    throw new Error(" Se espera un digito en la linea "+linea+" " + buffer , log);
                 }
                 else if (getClasificacion() == Tipos.Cadena)
                 {
-                    throw new Error(" Se espera cierre de cadena " + buffer, log);
+                    throw new Error(" Se espera cierre de cadena en la linea "+linea+" " + buffer, log);
                 }
                 else if (getClasificacion() == Tipos.OpFactor)
                 {
-                    throw new Error(" Se espera un cierre de comentario\n " + buffer, log);
+                    throw new Error(" Se espera un cierre de comentario en la linea "+linea+" "+ buffer, log);
                 }
             }
             setContenido(buffer);

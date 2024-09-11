@@ -86,7 +86,7 @@ namespace Semanticabbc
                     return v.getTipo();
                 }
             }
-            throw new Exception("La variable " + nombre + " no ha sido declarada");
+            throw new Error("La variable " + nombre + " no ha sido declarada en la linea "+linea,log);
         }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoDato t)
@@ -237,13 +237,13 @@ namespace Semanticabbc
                     case Variable.TipoDato.Char:
                         if (value < 0 || value > 255)
                         {
-                            throw new Exception("El valor asignado a " + variable + " excede el rango de un char");
+                            throw new Error("El valor asignado a " + variable + " excede el rango de un char en la linea "+linea,log);
                         }
                         break;
                     case Variable.TipoDato.Int:
                         if (value < 0 || value > 65535 || value != Math.Floor(value))
                         {
-                            throw new Exception("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero.");
+                            throw new Error("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero en la linea "+linea,log);
                         }
                         break;
 

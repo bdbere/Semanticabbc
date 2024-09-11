@@ -79,3 +79,4 @@ r = Identificador
 = = Asignacion
 60.3 = Numero
 ; = FinSentencia
+Error: El valor asignado a r excede el rango de un int o no es un valor entero en la linea 14

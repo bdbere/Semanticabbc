@@ -9,7 +9,7 @@ static void Main(string[] args)
     int r;
     float pi,e;
 
-
+    b++;
     a=(int)((3 + 5) * 8 - (10 - 4) / 2); 
     r=60.3;
     pi=60.3;

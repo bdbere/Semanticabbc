@@ -187,12 +187,8 @@ namespace Semanticabbc
         {
             string variable = getContenido();
             match(Tipos.Identificador);
-            if (getContenido() == "=")
-            {
-                match("=");
-                Expresion();
-            }
-            else if (getContenido() == "++")
+    
+            if (getContenido() == "++")
             {
                 match("++");
 
@@ -201,57 +197,61 @@ namespace Semanticabbc
             {
                 match("--");
             }
+            else if (getContenido() == "=")
+            {
+                match("=");
+            }
             else if (getContenido() == "+=")
             {
                 match("+=");
-                Expresion();
 
             }
             else if (getContenido() == "-=")
             {
                 match("-=");
-                Expresion();
 
             }
             else if (getContenido() == "*=")
             {
                 match("*=");
-                Expresion();
 
             }
             else if (getContenido() == "/=")
             {
                 match("/=");
-                Expresion();
 
             }
             else if (getContenido() == "%=")
             {
                 match("%=");
-                Expresion();
 
+            }
+            if (getClasificacion() == Tipos.Numero || getClasificacion() == Tipos.Identificador || getContenido() == "(")
+            {
+                Expresion();
+                float value = s.Pop();
+                Variable.TipoDato tipo = buscarVariable(variable);
+
+                switch (tipo)
+                {
+                    case Variable.TipoDato.Char:
+                        if (value < 0 || value > 255)
+                        {
+                            throw new Exception("El valor asignado a " + variable + " excede el rango de un char");
+                        }
+                        break;
+                    case Variable.TipoDato.Int:
+                        if (value < 0 || value > 65535 || value != Math.Floor(value))
+                        {
+                            throw new Exception("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero.");
+                        }
+                        break;
+
+                }
             }
             match(";");
-            imprimeStack();
-            float value = s.Pop();
-            Variable.TipoDato tipo = buscarVariable(variable);
-
-            switch (tipo)
-            {
-                case Variable.TipoDato.Char:
-                    if (value < 0 || value > 255)
-                    {
-                        throw new Exception("El valor asignado a " + variable + " excede el rango de un char");
-                    }
-                    break;
-                case Variable.TipoDato.Int:
-                    if (value < 0 || value > 65535 || value != Math.Floor(value))
-                    {
-                        throw new Exception("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero.");
-                    }
-                    break;
-                   
-            }
+            //imprimeStack();
+            
         }
         // If -> if (Condicion) bloqueInstrucciones | instruccion
         //    (else bloqueInstrucciones | instruccion)?

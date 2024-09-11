@@ -1,5 +1,3 @@
-Analizador Lexico
-Autor: Rafael Mejía
 using = Identificador
 System = Identificador
 ; = FinSentencia
@@ -51,6 +49,9 @@ pi = Identificador
 , = Caracter
 e = Identificador
 ; = FinSentencia
+b = Identificador
+++ = IncTermino
+; = FinSentencia
 a = Identificador
 = = Asignacion
 ( = Caracter
@@ -75,9 +76,6 @@ int = TipoDato
 ) = Caracter
 ; = FinSentencia
 r = Identificador
-Stack: 61 
 = = Asignacion
 60.3 = Numero
 ; = FinSentencia
-pi = Identificador
-Stack: 60.3 

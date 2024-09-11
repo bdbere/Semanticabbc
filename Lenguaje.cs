@@ -11,16 +11,10 @@ using Semanticabbc;
     por default
     4. Error semantico
     que es el postfijo
-<<<<<<< HEAD
-    char - 0...255 (1 byte)
-    int - De 0 a 65.535
-    
-=======
     
     char - 0...255 (1 byte) listo
     int - De 0 a 65.535 listo
    
->>>>>>> 90aa1b2a595d00e9a0e970d28525267cf931b7e4
     
 */
 
@@ -243,46 +237,21 @@ namespace Semanticabbc
                     case Variable.TipoDato.Char:
                         if (value < 0 || value > 255)
                         {
-                            throw new Exception("El valor asignado a " + variable + " excede el rango de un char");
+                            throw new Error("El valor asignado a " + variable + " excede el rango de un char en la linea " +linea,log);
                         }
                         break;
                     case Variable.TipoDato.Int:
                         if (value < 0 || value > 65535 || value != Math.Floor(value))
                         {
-                            throw new Exception("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero.");
+                            throw new Error("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero.en la linea " +linea,log);
                         }
                         break;
 
                 }
             }
             match(";");
-<<<<<<< HEAD
-            imprimeStack();
-            float value = s.Pop();
-            Variable.TipoDato tipo = buscarVariable(variable);
-
-            switch (tipo)
-            {
-                case Variable.TipoDato.Char:
-                    if (value < 0 || value > 255)
-                    {
-                        throw new Error("El valor asignado a " + variable + " excede el rango de un char en la linea "+linea,log);
-                    }
-                    break;
-                case Variable.TipoDato.Int:
-                    // Verificamos si el valor es entero y que esté dentro del rango de int
-                    if (value < 0 || value > 65535)
-                    {
-                        
-                        throw new Error("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero en la linea "+linea,log);
-                    }
-                    break;
-            }
-
-=======
             //imprimeStack();
             
->>>>>>> 90aa1b2a595d00e9a0e970d28525267cf931b7e4
         }
         // If -> if (Condicion) bloqueInstrucciones | instruccion
         //    (else bloqueInstrucciones | instruccion)?

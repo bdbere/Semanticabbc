@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using Semanticabbc;
 /*
     1.Colocar el numero de linea de errores lexicos y sintacticos
-    2.Cambiar la clase token por atributos publicos(get, set)
+    2.Cambiar la clase token por atributos privados(get, set)
     3.Cambiar los constructores de la clase lexico usando parametros
     por default
     4. Error semantico
     que es el postfijo
     char - 0...255 (1 byte)
     int - De 0 a 65.535
-    float - De -3.4028234663852886E+38 a 3.4028234663852886E+38
+    
     
 */
 
@@ -84,7 +84,7 @@ namespace Semanticabbc
                     return v.getTipo();
                 }
             }
-            throw new Exception("La variable " + nombre + " no ha sido declarada");
+            throw new Error("La variable " + nombre + " no ha sido declarada en la linea "+linea,log);
         }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoDato t)
@@ -239,14 +239,15 @@ namespace Semanticabbc
                 case Variable.TipoDato.Char:
                     if (value < 0 || value > 255)
                     {
-                        throw new Exception("El valor asignado a " + variable + " excede el rango de un char");
+                        throw new Error("El valor asignado a " + variable + " excede el rango de un char en la linea "+linea,log);
                     }
                     break;
                 case Variable.TipoDato.Int:
                     // Verificamos si el valor es entero y que esté dentro del rango de int
                     if (value < 0 || value > 65535)
                     {
-                        throw new Exception("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero.");
+                        
+                        throw new Error("El valor asignado a " + variable + " excede el rango de un int o no es un valor entero en la linea "+linea,log);
                     }
                     break;
             }

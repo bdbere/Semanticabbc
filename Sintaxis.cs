@@ -23,7 +23,7 @@ namespace Semanticabbc
             }
             else
             {
-                throw new Error("Sintaxis: se espera un "+espera,log);
+                throw new Error("Sintaxis: se espera un "+espera+" en la linea " +linea,log);
             }
         }
         public void match(Token.Tipos espera)
@@ -34,7 +34,7 @@ namespace Semanticabbc
             }
             else
             {
-                throw new Error("Sintaxis: se espera un "+espera,log);
+                throw new Error("Sintaxis: se espera un "+espera+" en la linea " +linea,log);
             }
         }
     }

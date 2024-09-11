@@ -23,6 +23,7 @@ namespace Semanticabbc
 
     public class Lenguaje : Sintaxis
     {
+        Token token = new Token();
         private List<Variable> listaVariables;
         private Stack<float> s;
 

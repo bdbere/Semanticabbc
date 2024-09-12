@@ -17,24 +17,24 @@ namespace Semanticabbc
         }
         public void match(string espera)
         {
-            if (getContenido() == espera)
+            if ( Contenido == espera)
             {
                 nextToken();
             }
             else
             {
-                throw new Error("Sintaxis: se espera un "+espera,log);
+                throw new Error("Sintaxis: se espera un "+espera+" ("+Contenido+")",log);
             }
         }
-        public void match(Token.Tipos espera)
+        public void match(Tipos espera)
         {
-            if (getClasificacion() == espera)
+            if (Clasificacion == espera)
             {
                 nextToken();
             }
             else
             {
-                throw new Error("Sintaxis: se espera un "+espera,log);
+                throw new Error("Sintaxis: se espera un "+espera+" ("+Contenido+")",log);
             }
         }
     }

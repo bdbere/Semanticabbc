@@ -14,27 +14,22 @@ namespace Semanticabbc
             IncFactor, Cadena, Inicio, Fin, Caracter, TipoDato, Ciclo, 
             Condicion
         };
-        private string contenido;
-        private Tipos clasificacion;
+        private string _contenido;
+        private Tipos _clasificacion;
+        public string Contenido
+        {
+            get => _contenido;
+            set => _contenido = value;
+        }
+        public Tipos Clasificacion
+        {
+            get => _clasificacion;
+            set => _clasificacion = value;
+        }
         public Token()
         {
-            contenido = "";
+            _contenido = "";
         }
-        public void setContenido(string contenido)
-        {
-            this.contenido = contenido;
-        }
-        public void setClasificacion(Tipos clasificacion)
-        {
-            this.clasificacion = clasificacion;
-        }
-        public string getContenido()
-        {
-            return this.contenido;
-        }
-        public Tipos getClasificacion()
-        {
-            return this.clasificacion;
-        }
+        
     }
 }

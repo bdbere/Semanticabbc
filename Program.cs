@@ -11,7 +11,7 @@ namespace Semanticabbc
         {
             try
             {
-                using (Lenguaje L = new Lenguaje("prueba.cpp"))
+                using (Lenguaje L = new Lenguaje())
                 {
 
                    L.Programa();

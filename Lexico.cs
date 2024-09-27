@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using System.Reflection.PortableExecutable;
 
 namespace Semanticabbc
 {
     public class Lexico : Token, IDisposable
     {
         
-        private StreamReader archivo;
+        protected StreamReader archivo;
         public StreamWriter log;
         protected StreamWriter asm;
         protected int linea;
+        protected int caracter;
         const int F = -1;
         const int E = -2;
         int[,] TRAND =
@@ -58,7 +60,7 @@ namespace Semanticabbc
             log.AutoFlush = true;
             asm = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".asm");
             asm.AutoFlush = true;
-            linea=1;
+            linea = caracter = 1;
 
             if (Path.GetExtension(nombre) != ".cpp")
             {
@@ -229,7 +231,7 @@ namespace Semanticabbc
                     {
                         buffer += c;
                     }
-                    
+                    caracter++;
                     archivo.Read();
                     if(c=='\n')
                     {
@@ -269,7 +271,7 @@ namespace Semanticabbc
                     case "for": Clasificacion = Tipos.Ciclo; break;
                 }
             }
-            log.WriteLine(Contenido + " = " + Clasificacion);
+           // log.WriteLine(Contenido + " = " + Clasificacion);
         }
         public bool finArchivo()
         {

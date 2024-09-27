@@ -5,13 +5,35 @@ using System.Threading.Tasks;
 
 static void Main(string[] args)
 {
-    char a,a,b,c,d;
-    int r;
-    float pi,e;
+    int a;
+    a=0;
+    do
+    {
+        a++;
+    } while (a<10);
+    //Console.WriteLine("holii");
+    
 
-    b++;
-    a=(int)((3 + 5) * 8 - (10 - 4) / 2); 
-    r=60.3;
-    pi=60.3;
-
+//    a = (char)(258);
+//    a = 1.5 + (300 + 1);
+    if (1==2)
+    {
+        a=10;
+        if (2==2)
+        {
+            a=20;
+        }
+        else
+        {
+            a=30;
+        }
+    }
+    else
+    {
+        a=40;
+        for (a=0; a<10; a++)
+        {
+            a=50;
+        }
+    }
 }

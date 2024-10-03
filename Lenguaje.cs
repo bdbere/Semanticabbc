@@ -7,8 +7,8 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 /*
-    1. Usar find en lugar del for each
-    2. Valiar que no existan varibles duplicadas
+    XXX1. Usar find en lugar del for each
+    XXX2. Validar que no existan varibles duplicadas
     3. Validar que existan las variables en las expressions matematicas
        Asignacion
     4. Asinar una expresion matematica a la variable al momento de declararla
@@ -91,15 +91,34 @@ namespace Semanticabbc
         private void imprimeVariables()
         {
             log.WriteLine("Lista de variables");
-            foreach (Variable v in listaVariables)
+            for (int i = 0; i < listaVariables.Count; i++)
             {
+
+                var v = listaVariables.Find(v => v.getNombre() == listaVariables[i].getNombre());
+
                 log.WriteLine(v.getNombre() + " (" + v.getTipo() + ") = " + v.getValor());
             }
+        }
+        private bool existeVariable(string nombre)
+        {
+            var v = listaVariables.Find(v => v.getNombre() == nombre);
+            if (v != null)
+            {
+                return true;
+            }
+            return false;
         }
         // ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void listaIdentificadores(Variable.TipoDato t)
         {
-            listaVariables.Add(new Variable(Contenido, t));
+            if (!existeVariable(Contenido))
+            {
+                listaVariables.Add(new Variable(Contenido, t));
+            }
+            else
+            {
+                throw new Error("La variable (" + Contenido + ") está duplicada en la linea ", log, linea);
+            }
             match(Tipos.Identificador);
             if (Contenido == ",")
             {
@@ -163,13 +182,17 @@ namespace Semanticabbc
         private void Asignacion(bool ejecutar)
         {
             string variable = Contenido;
+            if (!existeVariable(variable))
+            {
+                throw new Error("La variable (" + variable + ") no está declarada en la linea ", log, linea);
+            }
             match(Tipos.Identificador);
 
             var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == variable; });
             float nuevoValor = v.getValor();
 
             tipoDatoExpresion = Variable.TipoDato.Char;
-            
+
             if (Contenido == "=")
             {
                 match("=");
@@ -338,12 +361,12 @@ namespace Semanticabbc
             float R1 = S.Pop();
             switch (operador)
             {
-                case ">" : return R1 >  R2;
+                case ">": return R1 > R2;
                 case ">=": return R1 >= R2;
-                case "<" : return R1 <  R2;
+                case "<": return R1 < R2;
                 case "<=": return R1 <= R2;
                 case "==": return R1 == R2;
-                default  : return R1 != R2;
+                default: return R1 != R2;
             }
         }
         // While -> while(Condicion) bloqueInstrucciones | instruccion
@@ -367,33 +390,34 @@ namespace Semanticabbc
         //       while(Condicion);
         private void Do(bool ejecutar)
         {
-            int cTemp = caracter-3;
+            int cTemp = caracter - 3;
             int lTemp = linea;
             bool resultado = false;
-            do{
-            match("do");
-            if (Contenido == "{")
+            do
             {
-                bloqueInstrucciones(ejecutar);
-            }
-            else
-            {
-                Instruccion(ejecutar);
-            }
-            match("while");
-            match("(");
-            resultado = Condicion() && ejecutar;
-            match(")");
-            match(";");
-            if (resultado)
-            {
-                caracter = cTemp;
-                linea = lTemp;
-                archivo.DiscardBufferedData();
-                archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
-                nextToken();
-            }
-            }while(resultado);
+                match("do");
+                if (Contenido == "{")
+                {
+                    bloqueInstrucciones(ejecutar);
+                }
+                else
+                {
+                    Instruccion(ejecutar);
+                }
+                match("while");
+                match("(");
+                resultado = Condicion() && ejecutar;
+                match(")");
+                match(";");
+                if (resultado)
+                {
+                    caracter = cTemp;
+                    linea = lTemp;
+                    archivo.DiscardBufferedData();
+                    archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
+                    nextToken();
+                }
+            } while (resultado);
         }
         // For -> for(Asignacion Condicion; Incremento) 
         //          BloqueInstrucciones | Intruccion
@@ -416,7 +440,7 @@ namespace Semanticabbc
                 Instruccion(ejecutar);
             }
         }
-        
+
         // Console -> Console.(WriteLine|Write) (cadena?);
         private void console(bool ejecutar)
         {
@@ -443,7 +467,7 @@ namespace Semanticabbc
                 if (Contenido == "+")
                 {
                     listaConcatenacion();
-                }
+                }  
             }
             match(")");
             match(";");
@@ -451,6 +475,10 @@ namespace Semanticabbc
         string listaConcatenacion()
         {
             match("+");
+            if (!existeVariable(Contenido))
+            {
+                throw new Error("La variable (" + Contenido + ") no está declarada, en la linea ", log, linea);
+            }
             match(Tipos.Identificador); // Validar que exista la variable
             if (Contenido == "+")
             {
@@ -522,12 +550,12 @@ namespace Semanticabbc
         // Factor -> numero | identificador | (Expresion)
         private void imprimeStack()
         {
-            log.WriteLine("Stack:");
+            /*log.WriteLine("Stack:");
             foreach (float e in S.Reverse())
             {
                 log.Write(e + " ");
             }
-            log.WriteLine();
+            log.WriteLine(); */
         }
         private void Factor()
         {
@@ -542,13 +570,16 @@ namespace Semanticabbc
             }
             else if (Clasificacion == Tipos.Identificador)
             {
-                var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
-                S.Push(v.getValor());
-                if (tipoDatoExpresion < v.getTipo())
-                {
-                    tipoDatoExpresion = v.getTipo();
-                }
-                match(Tipos.Identificador);
+                
+                    var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
+                    S.Push(v.getValor());
+                    if (tipoDatoExpresion < v.getTipo())
+                    {
+                        tipoDatoExpresion = v.getTipo();
+                    }
+                    match(Tipos.Identificador);
+                
+                
             }
             else
             {

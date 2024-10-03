@@ -1,21 +1,2 @@
 Analizador Sintactico
-a = 0
-a = 1
-a = 2
-a = 3
-a = 4
-a = 5
-a = 6
-a = 7
-a = 8
-a = 9
-a = 10
-a = 10
-a = 20
-a = 30
-a = 40
-a = 0
-a = 1
-a = 50
-Lista de variables
-a (Int) = 50
+Error: Sintaxis: se espera un ( (=) en la línea 8

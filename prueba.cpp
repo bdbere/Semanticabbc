@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 static void Main(string[] args)
 {
-    int a;
-    a=0;
+    int a=10;
+    
     do
     {
         a++;

@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 
 static void Main(string[] args)
 {
-    int a=10;
-    
+    int a;
+     Console.WriteLine("holii");
     do
     {
         a++;
     } while (a<10);
-    //Console.WriteLine("holii");
-    
+   
 
 //    a = (char)(258);
 //    a = 1.5 + (300 + 1);

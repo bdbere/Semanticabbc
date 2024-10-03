@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\beren\\Documents\\ITQ\\Semestre 7\\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\\Semanticabbc\\Semanticabbc.csproj": {}
+    "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\beren\\Documents\\ITQ\\Semestre 7\\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\\Semanticabbc\\Semanticabbc.csproj": {
+    "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\beren\\Documents\\ITQ\\Semestre 7\\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\\Semanticabbc\\Semanticabbc.csproj",
+        "projectUniqueName": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj",
         "projectName": "Semanticabbc",
-        "projectPath": "C:\\Users\\beren\\Documents\\ITQ\\Semestre 7\\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\\Semanticabbc\\Semanticabbc.csproj",
-        "packagesPath": "C:\\Users\\beren\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\beren\\Documents\\ITQ\\Semestre 7\\2.Lenguajes y Autómatas II - Guillermo Fernandez Romero\\Semanticabbc\\obj\\",
+        "projectPath": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj",
+        "packagesPath": "C:\\Users\\Belen Sanchez\\.nuget\\packages\\",
+        "outputPath": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\beren\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Belen Sanchez\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -120,6 +120,13 @@ namespace Semanticabbc
                 throw new Error("La variable (" + Contenido + ") está duplicada en la linea ", log, linea);
             }
             match(Tipos.Identificador);
+            if(Contenido=="=")
+            {
+                match("=");
+                Expresion();
+                
+            }
+
             if (Contenido == ",")
             {
                 match(",");
@@ -459,7 +466,11 @@ namespace Semanticabbc
             {
                 if (ejecutar)
                 {
-                    Console.WriteLine(Contenido);
+                    string cadena = Contenido; 
+                    cadena = cadena.Remove(cadena.Length-1);
+                    cadena = cadena.Replace("\"","");
+                    Console.WriteLine(cadena); 
+                
                 }
                 // Considerar el Write
                 // Quitar las comillas

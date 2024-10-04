@@ -11,7 +11,7 @@ using System.Threading.Tasks;
     XXX2. Validar que no existan varibles duplicadas
     3. Validar que existan las variables en las expressions matematicas
        Asignacion
-    4. Asinar una expresion matematica a la variable al momento de declararla
+    XXX4. Asinar una expresion matematica a la variable al momento de declararla
        verificando la semantica
     5. Validar que en el ReadLine se capturen solo numeros (Excepcion)
     6. listaConcatenacion: 30, 40, 50, 12, 0
@@ -111,15 +111,27 @@ namespace Semanticabbc
         // ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void listaIdentificadores(Variable.TipoDato t)
         {
+            int cTemp = caracter - Contenido.Length -1;
+            int lTemp = linea;
             if (!existeVariable(Contenido))
             {
                 listaVariables.Add(new Variable(Contenido, t));
+                
             }
             else
             {
                 throw new Error("La variable (" + Contenido + ") está duplicada en la linea ", log, linea);
             }
             match(Tipos.Identificador);
+            if (Contenido == "=")
+            {
+                caracter = cTemp;
+                linea = lTemp;
+                archivo.DiscardBufferedData();
+                archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
+                nextToken();
+                Asignacion(true);
+            }
             if (Contenido == ",")
             {
                 match(",");

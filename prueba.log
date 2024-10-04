@@ -1,2 +1,11 @@
 Analizador Sintactico
-Error: Sintaxis: se espera un ( (=) en la línea 8
+a = 10
+x = 0
+y = 10
+z = 2
+Lista de variables
+a (Int) = 10
+x (Char) = 0
+y (Char) = 10
+z (Char) = 2
+c (Char) = 0

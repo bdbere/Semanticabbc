@@ -471,7 +471,11 @@ namespace Semanticabbc
             {
                 if (ejecutar)
                 {
-                    Console.WriteLine(Contenido);
+                    string cadena = Contenido; 
+                    cadena = cadena.Remove(cadena.Length-1);
+                    cadena = cadena.Replace("\"","");
+                    Console.WriteLine(cadena); 
+                
                 }
                 // Considerar el Write
                 // Quitar las comillas

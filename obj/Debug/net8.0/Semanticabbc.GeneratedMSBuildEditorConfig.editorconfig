@@ -8,6 +8,10 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Semanticabbc
+<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\mokka\OneDrive\Imágenes\Universidad\Quinto semestre\LyAII\proyectos\semanticabbc\Semanticabbc\
+=======
+build_property.ProjectDir = D:\Semestres\7mo\LENGUAJES Y AUTOMATAS\Proyecto\Semanticabbc\
+>>>>>>> 530a3f37ccee4c56b4e94dca0c5df1e2d984c770
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

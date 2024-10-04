@@ -1,14 +1,15 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "hXCNzpfazIA=",
   "success": true,
   "projectFilePath": "C:\\Users\\mokka\\OneDrive\\Imágenes\\Universidad\\Quinto semestre\\LyAII\\proyectos\\semanticabbc\\Semanticabbc\\Semanticabbc.csproj",
-=======
-  "dgSpecHash": "TMw5tzhPfZM=",
-  "success": true,
-  "projectFilePath": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj",
->>>>>>> 530a3f37ccee4c56b4e94dca0c5df1e2d984c770
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\mokka\\OneDrive\\Imágenes\\Universidad\\Quinto semestre\\LyAII\\proyectos\\semanticabbc\\Semanticabbc\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

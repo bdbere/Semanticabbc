@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\Users\\mokka\\OneDrive\\Imágenes\\Universidad\\Quinto semestre\\LyAII\\proyectos\\semanticabbc\\Semanticabbc\\Semanticabbc.csproj": {}
   },
   "projects": {
@@ -16,22 +15,6 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mokka\\AppData\\Roaming\\NuGet\\NuGet.Config"
-=======
-    "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj": {}
-  },
-  "projects": {
-    "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj",
-        "projectName": "Semanticabbc",
-        "projectPath": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\Semanticabbc.csproj",
-        "packagesPath": "C:\\Users\\Belen Sanchez\\.nuget\\packages\\",
-        "outputPath": "D:\\Semestres\\7mo\\LENGUAJES Y AUTOMATAS\\Proyecto\\Semanticabbc\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\Belen Sanchez\\AppData\\Roaming\\NuGet\\NuGet.Config"
->>>>>>> 530a3f37ccee4c56b4e94dca0c5df1e2d984c770
         ],
         "originalTargetFrameworks": [
           "net8.0"

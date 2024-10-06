@@ -482,7 +482,7 @@ namespace Semanticabbc
                     string cadena = Contenido;
                     cadena = cadena.Remove(cadena.Length - 1);
                     cadena = cadena.Replace("\"", "");
-                    Console.WriteLine(cadena);
+                    Console.Write(cadena);
 
                 }
                 // Considerar el Write
@@ -499,11 +499,26 @@ namespace Semanticabbc
         string listaConcatenacion()
         {
             match("+");
-            if (!existeVariable(Contenido))
+            if (Clasificacion == Tipos.Cadena)
+            {
+                 string cadena = Contenido;
+                    cadena = cadena.Remove(cadena.Length - 1);
+                    cadena = cadena.Replace("\"", "");
+                    Console.Write(cadena);
+                    match(Tipos.Cadena);
+            }
+            else
+            {
+                if (!existeVariable(Contenido))
             {
                 throw new Error("La variable (" + Contenido + ") no está declarada, en la linea ", log, linea);
             }
+            var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
+            string valorConcatenacion = (v.getValor()).ToString();
+            Console.Write(valorConcatenacion);
             match(Tipos.Identificador); // Validar que exista la variable
+            }
+        
             if (Contenido == "+")
             {
                 listaConcatenacion();

@@ -2,4 +2,11 @@ Analizador Sintactico
 x = 0
 y = 10
 z = 2
-Error: La variable (b) no está declarada en la linea  en la línea 11
+Lista de variables
+altura (Int) = 0
+i (Int) = 0
+j (Int) = 0
+x (Char) = 0
+y (Char) = 10
+z (Char) = 2
+c (Char) = 0

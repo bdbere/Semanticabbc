@@ -10,6 +10,7 @@ static void Main(string[] args)
     char c;
     
 
-    Console.WriteLine("Valor de altura = ");
-    altura = Console.ReadLine();
+    Console.WriteLine("Valor de y="+y+" "+z+" "+x);
+    
+    
 }

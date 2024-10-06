@@ -8,6 +8,7 @@ static void Main(string[] args)
     int altura,i,j;
     char x=0, y=10, z=2;
     char c;
+    
 
     Console.WriteLine("Valor de altura = ");
     altura = Console.ReadLine();

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /*
     XXX1. Usar find en lugar del for each
     XXX2. Validar que no existan varibles duplicadas
-    3. Validar que existan las variables en las expressions matematicas
+    XXX3. Validar que existan las variables en las expressions matematicas
        Asignacion
     XXX4. Asinar una expresion matematica a la variable al momento de declararla
        verificando la semantica
@@ -111,12 +111,12 @@ namespace Semanticabbc
         // ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void listaIdentificadores(Variable.TipoDato t)
         {
-            int cTemp = caracter - Contenido.Length -1;
+            int cTemp = caracter - Contenido.Length - 1;
             int lTemp = linea;
             if (!existeVariable(Contenido))
             {
                 listaVariables.Add(new Variable(Contenido, t));
-                
+
             }
             else
             {
@@ -479,11 +479,11 @@ namespace Semanticabbc
             {
                 if (ejecutar)
                 {
-                    string cadena = Contenido; 
-                    cadena = cadena.Remove(cadena.Length-1);
-                    cadena = cadena.Replace("\"","");
-                    Console.WriteLine(cadena); 
-                
+                    string cadena = Contenido;
+                    cadena = cadena.Remove(cadena.Length - 1);
+                    cadena = cadena.Replace("\"", "");
+                    Console.WriteLine(cadena);
+
                 }
                 // Considerar el Write
                 // Quitar las comillas
@@ -491,7 +491,7 @@ namespace Semanticabbc
                 if (Contenido == "+")
                 {
                     listaConcatenacion();
-                }  
+                }
             }
             match(")");
             match(";");
@@ -594,16 +594,20 @@ namespace Semanticabbc
             }
             else if (Clasificacion == Tipos.Identificador)
             {
-                
-                    var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
-                    S.Push(v.getValor());
-                    if (tipoDatoExpresion < v.getTipo())
-                    {
-                        tipoDatoExpresion = v.getTipo();
-                    }
-                    match(Tipos.Identificador);
-                
-                
+
+                if (!existeVariable(Contenido))
+                {
+                    throw new Error("La variable (" + Contenido + ") no está declarada en la linea ", log, linea);
+                }
+                var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
+                S.Push(v.getValor());
+                if (tipoDatoExpresion < v.getTipo())
+                {
+                    tipoDatoExpresion = v.getTipo();
+                }
+                match(Tipos.Identificador);
+
+
             }
             else
             {

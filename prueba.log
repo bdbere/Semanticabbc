@@ -2,4 +2,4 @@ Analizador Sintactico
 x = 0
 y = 10
 z = 2
-Error: Solo puedes asignar números a un ReadLine en la línea 13
+Error: La variable (b) no está declarada en la linea  en la línea 11

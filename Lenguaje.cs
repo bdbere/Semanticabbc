@@ -14,7 +14,7 @@ using System.Threading.Tasks;
     XXX4. Asinar una expresion matematica a la variable al momento de declararla
        verificando la semantica
     XXX5. Validar que en el ReadLine se capturen solo numeros (Excepcion)
-    6. listaConcatenacion: 30, 40, 50, 12, 0
+    XXX6. listaConcatenacion: 30, 40, 50, 12, 0
     XXX7. Quitar comillas y considerar el Write
     8. Emular el for -> 15 puntos
     9. Emular el while -> 15 puntos

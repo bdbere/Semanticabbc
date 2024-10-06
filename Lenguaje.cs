@@ -13,7 +13,7 @@ using System.Threading.Tasks;
        Asignacion
     XXX4. Asinar una expresion matematica a la variable al momento de declararla
        verificando la semantica
-    5. Validar que en el ReadLine se capturen solo numeros (Excepcion)
+    XXX5. Validar que en el ReadLine se capturen solo numeros (Excepcion)
     6. listaConcatenacion: 30, 40, 50, 12, 0
     XXX7. Quitar comillas y considerar el Write
     8. Emular el for -> 15 puntos
@@ -224,7 +224,15 @@ namespace Semanticabbc
                     else
                     {
                         match("ReadLine");
-                        nuevoValor = float.Parse("" + Console.ReadLine());
+                        string valorReadLine = Console.ReadLine();
+                        if (!float.TryParse(valorReadLine, out float valor))
+                        {
+                            throw new Error("Solo puedes asignar números a un ReadLine", log, linea);
+                        }
+                        else
+                        {
+                            nuevoValor = float.Parse(valorReadLine);
+                        }
                         // 8
                     }
                     match("(");

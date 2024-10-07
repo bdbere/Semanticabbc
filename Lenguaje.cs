@@ -17,7 +17,7 @@ using System.Threading.Tasks;
     XXX6. listaConcatenacion: 30, 40, 50, 12, 0
     XXX7. Quitar comillas y considerar el Write
     8. Emular el for -> 15 puntos
-    9. Emular el while -> 15 puntos
+    XXX9. Emular el while -> 15 puntos
 */
 
 namespace Semanticabbc
@@ -392,18 +392,34 @@ namespace Semanticabbc
         // While -> while(Condicion) bloqueInstrucciones | instruccion
         private void While(bool ejecutar)
         {
-            match("while");
-            match("(");
-            Condicion();
-            match(")");
-            if (Contenido == "{")
+            int cTemp = caracter - 6;
+            int lTemp = linea;
+            bool resultado = false;
+            do
             {
-                bloqueInstrucciones(ejecutar);
-            }
-            else
-            {
-                Instruccion(ejecutar);
-            }
+                match("while");
+                match("(");
+                resultado = Condicion() && ejecutar;
+                match(")");
+                if (Contenido == "{")
+                {
+                    bloqueInstrucciones(ejecutar);
+                }
+                else
+                {
+                    Instruccion(ejecutar);
+                }
+                if (resultado)
+                {
+                    caracter = cTemp;
+                    linea = lTemp;
+                    archivo.DiscardBufferedData();
+                    archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
+                    nextToken();
+                }
+            }while (resultado);
+
+
         }
         // Do -> do 
         //          bloqueInstrucciones | intruccion 
@@ -443,32 +459,107 @@ namespace Semanticabbc
         //          BloqueInstrucciones | Intruccion
         private void For(bool ejecutar)
         {
+            // Guardar la posición actual de línea y caracter para poder regresar si es necesario
+            int cTemp = caracter - 3;
+            int lTemp = linea;
+            bool resultado = false;
+            float nuevoValor = 0;
             match("for");
             match("(");
             Asignacion(ejecutar);
             match(";");
-            Condicion();
-            match(";");
-            Asignacion(ejecutar);
-            match(")");
-            if (Contenido == "{")
+            //string variable = Contenido;
+            do
             {
-                bloqueInstrucciones(ejecutar);
+
+                resultado = Condicion() && ejecutar;  // Evaluar la condición
+                match(";");
+                var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
+                match(Tipos.Identificador);
+                if (Contenido == "++")
+                {
+                    match("++");
+                    nuevoValor = v.getValor() + 1;
+                }
+                else if (Contenido == "--")
+                {
+                    match("--");
+                    nuevoValor = v.getValor() - 1;
+
+                }
+                match(")");
+
+                if (resultado)
+                {
+                    // Ejecutar el cuerpo del for
+                    if (Contenido == "{")
+                    {
+                        bloqueInstrucciones(ejecutar);
+                    }
+                    else
+                    {
+                        Instruccion(ejecutar);
+                    }
+                }
+                if (resultado)
+                {
+                    Modifica(Contenido, nuevoValor);
+                    caracter = cTemp;
+                    linea = lTemp;
+                    archivo.DiscardBufferedData();
+                    archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);  // Regresamos al punto original en el archivo
+                    nextToken();  // Leemos el siguiente token para continuar
+                }
+
+            } while (resultado);  // Se repite mientras la condición sea verdadera
+        }
+
+        private void Modifica(string nombre, float nuevoValor)
+        {
+            foreach (Variable v in listaVariables)
+            {
+                if (v.getNombre() == nombre)
+                {
+                    v.setValor(nuevoValor);
+                    break;
+                }
+            }
+        }
+        /*
+        private float Incremento(bool ejecuta)
+        {
+            string nombre = getContenido();
+            float resultado = 0;
+
+            if (!Existe(nombre))
+            {
+                throw new Error("de sintaxis, la variable <" + nombre + "> no está declarada, en la linea " + linea, log);
+            }
+            match(Tipos.Identificador);
+            if (getContenido() == "++")
+            {
+                if (ejecuta && generacodigo) asm.WriteLine("INC " + nombre + "\n");
+                resultado = Valor(nombre) + 1;
+                match("++");
             }
             else
             {
-                Instruccion(ejecutar);
+                if (ejecuta && generacodigo) asm.WriteLine("DEC " + nombre + "\n");
+                resultado = Valor(nombre) - 1;
+                match("--");
             }
-        }
-
+            return resultado;
+        }*/
         // Console -> Console.(WriteLine|Write) (cadena?);
         private void console(bool ejecutar)
         {
+            bool salto = false;
             match("Console");
             match(".");
             if (Contenido == "WriteLine")
             {
                 match("WriteLine");
+                salto = true;
             }
             else
             {
@@ -477,6 +568,7 @@ namespace Semanticabbc
             match("(");
             if (Clasificacion == Tipos.Cadena)
             {
+                
                 if (ejecutar)
                 {
                     string cadena = Contenido;
@@ -492,6 +584,10 @@ namespace Semanticabbc
                 {
                     listaConcatenacion();
                 }
+                if (salto)
+                {
+                    Console.WriteLine();
+                }
             }
             match(")");
             match(";");
@@ -501,24 +597,24 @@ namespace Semanticabbc
             match("+");
             if (Clasificacion == Tipos.Cadena)
             {
-                 string cadena = Contenido;
-                    cadena = cadena.Remove(cadena.Length - 1);
-                    cadena = cadena.Replace("\"", "");
-                    Console.Write(cadena);
-                    match(Tipos.Cadena);
+                string cadena = Contenido;
+                cadena = cadena.Remove(cadena.Length - 1);
+                cadena = cadena.Replace("\"", "");
+                Console.Write(cadena);
+                match(Tipos.Cadena);
             }
             else
             {
                 if (!existeVariable(Contenido))
-            {
-                throw new Error("La variable (" + Contenido + ") no está declarada, en la linea ", log, linea);
+                {
+                    throw new Error("La variable (" + Contenido + ") no está declarada, en la linea ", log, linea);
+                }
+                var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
+                string valorConcatenacion = v.getValor().ToString();
+                Console.Write(valorConcatenacion);
+                match(Tipos.Identificador); // Validar que exista la variable
             }
-            var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
-            string valorConcatenacion = (v.getValor()).ToString();
-            Console.Write(valorConcatenacion);
-            match(Tipos.Identificador); // Validar que exista la variable
-            }
-        
+
             if (Contenido == "+")
             {
                 listaConcatenacion();

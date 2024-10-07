@@ -3,22 +3,5 @@ x = 0
 y = 10
 z = 2
 altura = 3
-x = 1
-x = 2
-x = 3
-x = 4
-x = 5
-x = 6
-x = 7
-x = 8
-x = 9
-x = 10
-x = 11
-Lista de variables
-altura (Int) = 3
-i (Int) = 0
-j (Int) = 0
-x (Char) = 11
-y (Char) = 10
-z (Char) = 2
-c (Char) = 0
+i = 1
+Error: Sintaxis: se espera un %= (<=) en la línea 20

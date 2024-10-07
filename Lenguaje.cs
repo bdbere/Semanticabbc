@@ -417,7 +417,7 @@ namespace Semanticabbc
                     archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
                     nextToken();
                 }
-            }while (resultado);
+            } while (resultado);
 
 
         }
@@ -455,26 +455,30 @@ namespace Semanticabbc
                 }
             } while (resultado);
         }
-        // For -> for(Asignacion Condicion; Incremento) 
-        //          BloqueInstrucciones | Intruccion
+        // For -> for(Asignacion; Condicion; Incremento) BloqueInstrucciones | Instruccion
         private void For(bool ejecutar)
         {
             // Guardar la posición actual de línea y caracter para poder regresar si es necesario
             int cTemp = caracter - 3;
             int lTemp = linea;
+            bool valorInicial = true;
             bool resultado = false;
             float nuevoValor = 0;
-            match("for");
-            match("(");
-            Asignacion(ejecutar);
-            match(";");
-            //string variable = Contenido;
+            float valorAsignacion = 0;
+
             do
             {
-
+                match("for");
+                match("(");
+                if (nuevoValor != valorAsignacion)
+                {
+                    valorInicial = false;
+                }
+                Asignacion(valorInicial);
+                match(";");
                 resultado = Condicion() && ejecutar;  // Evaluar la condición
                 match(";");
-                var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
+                var v = listaVariables.Find(x => x.getNombre() == Contenido);
                 match(Tipos.Identificador);
                 if (Contenido == "++")
                 {
@@ -488,22 +492,17 @@ namespace Semanticabbc
 
                 }
                 match(")");
-
-                if (resultado)
+                if (Contenido == "{")
                 {
-                    // Ejecutar el cuerpo del for
-                    if (Contenido == "{")
-                    {
-                        bloqueInstrucciones(ejecutar);
-                    }
-                    else
-                    {
-                        Instruccion(ejecutar);
-                    }
+                    bloqueInstrucciones(ejecutar);
                 }
+                else
+                {
+                    Instruccion(ejecutar);
+                }
+                v.setValor(nuevoValor);
                 if (resultado)
                 {
-                    Modifica(Contenido, nuevoValor);
                     caracter = cTemp;
                     linea = lTemp;
                     archivo.DiscardBufferedData();
@@ -513,43 +512,6 @@ namespace Semanticabbc
 
             } while (resultado);  // Se repite mientras la condición sea verdadera
         }
-
-        private void Modifica(string nombre, float nuevoValor)
-        {
-            foreach (Variable v in listaVariables)
-            {
-                if (v.getNombre() == nombre)
-                {
-                    v.setValor(nuevoValor);
-                    break;
-                }
-            }
-        }
-        /*
-        private float Incremento(bool ejecuta)
-        {
-            string nombre = getContenido();
-            float resultado = 0;
-
-            if (!Existe(nombre))
-            {
-                throw new Error("de sintaxis, la variable <" + nombre + "> no está declarada, en la linea " + linea, log);
-            }
-            match(Tipos.Identificador);
-            if (getContenido() == "++")
-            {
-                if (ejecuta && generacodigo) asm.WriteLine("INC " + nombre + "\n");
-                resultado = Valor(nombre) + 1;
-                match("++");
-            }
-            else
-            {
-                if (ejecuta && generacodigo) asm.WriteLine("DEC " + nombre + "\n");
-                resultado = Valor(nombre) - 1;
-                match("--");
-            }
-            return resultado;
-        }*/
         // Console -> Console.(WriteLine|Write) (cadena?);
         private void console(bool ejecutar)
         {
@@ -568,7 +530,7 @@ namespace Semanticabbc
             match("(");
             if (Clasificacion == Tipos.Cadena)
             {
-                
+
                 if (ejecutar)
                 {
                     string cadena = Contenido;
@@ -683,15 +645,6 @@ namespace Semanticabbc
             }
         }
         // Factor -> numero | identificador | (Expresion)
-        private void imprimeStack()
-        {
-            /*log.WriteLine("Stack:");
-            foreach (float e in S.Reverse())
-            {
-                log.Write(e + " ");
-            }
-            log.WriteLine(); */
-        }
         private void Factor()
         {
             if (Clasificacion == Tipos.Numero)

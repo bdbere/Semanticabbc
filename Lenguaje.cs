@@ -331,6 +331,10 @@ namespace Semanticabbc
                     if (valor <= 65535)
                         return true;
                 }
+                else if (v.getTipo() == Variable.TipoDato.Float)
+                {
+                        return true;
+                }
                 return false;
             }
             else
@@ -506,11 +510,11 @@ namespace Semanticabbc
                     caracter = cTemp;
                     linea = lTemp;
                     archivo.DiscardBufferedData();
-                    archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);  // Regresamos al punto original en el archivo
-                    nextToken();  // Leemos el siguiente token para continuar
+                    archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin); 
+                    nextToken();  
                 }
 
-            } while (resultado);  // Se repite mientras la condición sea verdadera
+            } while (resultado);
         }
         // Console -> Console.(WriteLine|Write) (cadena?);
         private void console(bool ejecutar)

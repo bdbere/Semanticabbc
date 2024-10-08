@@ -16,7 +16,7 @@ using System.Threading.Tasks;
     XXX5. Validar que en el ReadLine se capturen solo numeros (Excepcion)
     XXX6. listaConcatenacion: 30, 40, 50, 12, 0
     XXX7. Quitar comillas y considerar el Write
-    8. Emular el for -> 15 puntos
+    XXX8. Emular el for -> 15 puntos
     XXX9. Emular el while -> 15 puntos
 */
 

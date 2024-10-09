@@ -191,7 +191,7 @@ namespace Semanticabbc
             }
         }
         // Asignacion -> Identificador = Expresion;
-        private void Asignacion(bool ejecutar)
+        private float Asignacion(bool ejecutar)
         {
             string variable = Contenido;
             if (!existeVariable(variable))
@@ -288,14 +288,17 @@ namespace Semanticabbc
             if (analisisSemantico(v, nuevoValor))
             {
                 if (ejecutar)
+                {
                     v.setValor(nuevoValor);
+                }
             }
             else
             {
                 throw new Error("Semantico, no puedo asignar un " + tipoDatoExpresion +
                                 " a un " + v.getTipo(), log, linea);
             }
-            log.WriteLine(variable + " = " + nuevoValor);
+            log.WriteLine(variable + " = " + v.getValor());
+            return nuevoValor;
         }
         private Variable.TipoDato valorToTipo(float valor)
         {
@@ -333,7 +336,7 @@ namespace Semanticabbc
                 }
                 else if (v.getTipo() == Variable.TipoDato.Float)
                 {
-                        return true;
+                    return true;
                 }
                 return false;
             }
@@ -353,6 +356,7 @@ namespace Semanticabbc
             match("(");
             bool resultado = Condicion();
             match(")");
+
             if (Contenido == "{")
             {
                 bloqueInstrucciones(resultado && ejecutar);
@@ -373,6 +377,7 @@ namespace Semanticabbc
                     Instruccion(!resultado && ejecutar);
                 }
             }
+
         }
         // Condicion -> Expresion operadorRelacional Expresion
         private bool Condicion()
@@ -462,56 +467,43 @@ namespace Semanticabbc
         // For -> for(Asignacion; Condicion; Incremento) BloqueInstrucciones | Instruccion
         private void For(bool ejecutar)
         {
-            // Guardar la posición actual de línea y caracter para poder regresar si es necesario
-            int cTemp = caracter - 3;
+
+            bool resultado = false;
+
+            int cTemp = caracter - 4;
             int lTemp = linea;
             bool valorInicial = true;
-            bool resultado = false;
-            float nuevoValor = 0;
-            float valorAsignacion = 0;
-
             do
             {
                 match("for");
                 match("(");
-                if (nuevoValor != valorAsignacion)
-                {
-                    valorInicial = false;
-                }
                 Asignacion(valorInicial);
+                valorInicial = false;
                 match(";");
-                resultado = Condicion() && ejecutar;  // Evaluar la condición
+                resultado = Condicion() && ejecutar;
                 match(";");
-                var v = listaVariables.Find(x => x.getNombre() == Contenido);
-                match(Tipos.Identificador);
-                if (Contenido == "++")
-                {
-                    match("++");
-                    nuevoValor = v.getValor() + 1;
-                }
-                else if (Contenido == "--")
-                {
-                    match("--");
-                    nuevoValor = v.getValor() - 1;
-
-                }
+                var v = listaVariables.Find(delegate (Variable x) { return x.getNombre() == Contenido; });
+                float nuevoValor = Asignacion(false);
                 match(")");
                 if (Contenido == "{")
                 {
-                    bloqueInstrucciones(ejecutar);
+                    bloqueInstrucciones(resultado);
                 }
                 else
                 {
-                    Instruccion(ejecutar);
+                    Instruccion(resultado);
                 }
-                v.setValor(nuevoValor);
+
                 if (resultado)
                 {
+                    v.setValor(nuevoValor);
+
                     caracter = cTemp;
                     linea = lTemp;
                     archivo.DiscardBufferedData();
-                    archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin); 
-                    nextToken();  
+                    archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
+                    nextToken();
+
                 }
 
             } while (resultado);

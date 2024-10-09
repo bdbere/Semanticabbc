@@ -9,9 +9,9 @@ static void Main(string[] args)
     float y=10, z=2;
     char c;
 
-    // c = (100+200);
+    //c = (100+200);
     c = (char) (100+200);
-
+    
     Console.Write("Valor de altura = ");
     altura = Console.ReadLine();
 

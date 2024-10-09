@@ -410,21 +410,44 @@ namespace Semanticabbc
                 match("(");
                 resultado = Condicion() && ejecutar;
                 match(")");
-                if (Contenido == "{")
+                if (resultado)
                 {
-                    bloqueInstrucciones(ejecutar);
+
+                    if (Contenido == "{")
+                    {
+                        bloqueInstrucciones(ejecutar);
+                    }
+                    else
+                    {
+                        Instruccion(ejecutar);
+                    }
+                    if (resultado)
+                    {
+                        caracter = cTemp;
+                        linea = lTemp;
+                        archivo.DiscardBufferedData();
+                        archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
+                        nextToken();
+                    }
                 }
                 else
                 {
-                    Instruccion(ejecutar);
-                }
-                if (resultado)
-                {
-                    caracter = cTemp;
-                    linea = lTemp;
-                    archivo.DiscardBufferedData();
-                    archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
-                    nextToken();
+                    if (Contenido == "{")
+                    {
+                        while (Contenido != "}")
+                        {
+                            nextToken();
+                        }
+                        match ("}");
+                    }
+                    else
+                    {
+                        while (Contenido != ";")
+                        {
+                            nextToken();
+                        }
+                        match (";");
+                    }
                 }
             } while (resultado);
 
@@ -493,10 +516,10 @@ namespace Semanticabbc
                 {
                     Instruccion(resultado);
                 }
-
+                v.setValor(nuevoValor);
                 if (resultado)
                 {
-                    v.setValor(nuevoValor);
+                    
 
                     caracter = cTemp;
                     linea = lTemp;

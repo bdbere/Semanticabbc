@@ -54,7 +54,7 @@ namespace Semanticabbc
             {F,F, 32, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F}
 
         };
-        public Lexico(string nombre = "prueba.cpp") // Constructor
+        public Lexico(string nombre = "suma.cpp") // Constructor
         {
             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
             log.AutoFlush = true;
